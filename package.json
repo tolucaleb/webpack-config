@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Simple starter package for webpack javascript and css bundling with React hot loading support",
   "main": "index.js",
+  "repository": "https://github.com/caleb-tolu/webpack-config.git",
   "scripts": {
     "start": "SET NODE_ENV=development& NODE_ENV=development&  node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline",
     "build": "SET NODE_ENV=production& NODE_ENV=production& webpack  --colors "
