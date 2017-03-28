@@ -8,7 +8,7 @@ import reducers from './reducers';
 
 import Bootstrap from '../node_modules/bootstrap/dist/css/bootstrap.css';
 import FontAwesome from '../node_modules/font-awesome/css/font-awesome.css';
-import styling from '../css/app.scss';
+import Styling from '../css/app.scss';
 
 ReactDOM.render(
   <Provider store={createStore(reducers)}>
