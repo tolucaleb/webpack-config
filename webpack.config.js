@@ -15,35 +15,33 @@ if (process.env.NODE_ENV === 'development') {
     devtool: 'source-map',
     module: {
       rules: [
-
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
-          loader: ['babel-loader'],
+          use: ['babel-loader'],
         },
         {
-          test: /\.(css|scss|sass)/,
+          test: /\.(css|scss)$/,
           loader: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            loader: 'css-loader!postcss-loader!less-loader!sass-loader',
-            options: { sourceMap: false, minimize: false },
+            use: ['css-loader', 'postcss-loader', 'sass-loader'],
           }),
         },
         {
           test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
         }, {
           test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
         }, {
           test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
+          use: 'url-loader?limit=10000&mimetype=application/octet-stream',
         }, {
           test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'file-loader',
+          use: 'file-loader',
         }, {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=image/svg+xml',
+          use: 'url-loader?limit=10000&mimetype=image/svg+xml',
         },
       ],
     },
@@ -74,35 +72,33 @@ if (process.env.NODE_ENV === 'development') {
     devtool: 'source-map',
     module: {
       rules: [
-
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
-          loader: ['babel-loader'],
+          use: ['babel-loader'],
         },
         {
-          test: /\.(css|scss|sass)/,
+          test: /\.(css|scss)$/,
           loader: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            loader: 'css-loader!postcss-loader!less-loader!sass-loader',
-            options: { sourceMap: true, minimize: true },
+            use: ['css-loader', 'postcss-loader', 'sass-loader'],
           }),
         },
         {
           test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
         }, {
           test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
         }, {
           test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
+          use: 'url-loader?limit=10000&mimetype=application/octet-stream',
         }, {
           test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'file-loader',
+          use: 'file-loader',
         }, {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader?limit=10000&mimetype=image/svg+xml',
+          use: 'url-loader?limit=10000&mimetype=image/svg+xml',
         },
       ],
     },
@@ -123,11 +119,10 @@ if (process.env.NODE_ENV === 'development') {
         },
       }),
       new webpack.optimize.UglifyJsPlugin({
-        compress: { warnings: false },
       }),
     ],
+
   };
 }
-
 
 module.exports = config;
