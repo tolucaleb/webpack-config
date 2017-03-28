@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const path = require('path');
 
 let config;
 if (process.env.NODE_ENV === 'development') {
@@ -66,7 +67,7 @@ if (process.env.NODE_ENV === 'development') {
       app: ['./js/index'],
     },
     output: {
-      path: './public',
+      path: path.resolve(__dirname, './public'),
       filename: '[name]-bundle.js',
     },
     devtool: 'source-map',
