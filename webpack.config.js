@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
@@ -6,14 +7,17 @@ const path = require('path');
 let config;
 if (process.env.NODE_ENV === 'development') {
   config = {
-    entry: {
-      app: ['./js/index'],
-    },
+    entry: [
+      'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      './js/index.js',
+    ],
     output: {
       publicPath: '/',
-      filename: '[name]-bundle.js',
+      filename: '[name]-[hash].min.js',
     },
-    devtool: 'source-map',
+    devtool: 'eval',
     module: {
       rules: [
         {
@@ -31,6 +35,10 @@ if (process.env.NODE_ENV === 'development') {
         {
           test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
           use: 'url-loader?limit=10000&mimetype=application/font-woff',
+        },
+        {
+          test: /\.[ot]tf$/,
+          use: 'url-loader?limit=10000&mimetype=application/octet-stream',
         }, {
           test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
           use: 'url-loader?limit=10000&mimetype=application/font-woff',
@@ -48,7 +56,13 @@ if (process.env.NODE_ENV === 'development') {
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new ExtractTextPlugin('bundle.css'),
+      new webpack.NamedModulesPlugin(),
+      new ExtractTextPlugin('[name]-[hash].min.css'),
+      new HtmlWebpackPlugin({
+        template: 'index.tpl.html',
+        inject: 'body',
+        filename: 'index.html',
+      }),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('development'),
@@ -57,6 +71,8 @@ if (process.env.NODE_ENV === 'development') {
     ],
     devServer: {
       historyApiFallback: true,
+      hot: true,
+      publicPath: '/',
       contentBase: './',
     },
 
@@ -68,9 +84,9 @@ if (process.env.NODE_ENV === 'development') {
     },
     output: {
       path: path.resolve(__dirname, './public'),
-      filename: '[name]-bundle.js',
+      filename: '[name]-[hash].min.js',
     },
-    devtool: 'source-map',
+    devtool: 'eval',
     module: {
       rules: [
         {
@@ -104,8 +120,12 @@ if (process.env.NODE_ENV === 'development') {
       ],
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new ExtractTextPlugin('bundle.css'),
+      new ExtractTextPlugin('[name]-[hash].min.css'),
+      new HtmlWebpackPlugin({
+        template: 'index.tpl.html',
+        inject: 'body',
+        filename: 'index.html',
+      }),
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: /\.css$/,
         cssProcessorOptions: {
@@ -120,6 +140,8 @@ if (process.env.NODE_ENV === 'development') {
         },
       }),
       new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false, screw_ie8: true },
+        comments: false,
       }),
     ],
 
