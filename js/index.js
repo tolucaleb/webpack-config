@@ -1,17 +1,34 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { render } from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 
 import App from './components/app';
-import reducers from './reducers';
+import configureStore from './store';
 
-import Bootstrap from '../node_modules/bootstrap/dist/css/bootstrap.css';
-import FontAwesome from '../node_modules/font-awesome/css/font-awesome.css';
-import Styling from '../css/app.scss';
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../node_modules/font-awesome/css/font-awesome.css';
+import '../css/app.scss';
 
-ReactDOM.render(
-  <Provider store={createStore(reducers)}>
-    <App />
-  </Provider>
+const store = configureStore();
+render(
+  <AppContainer>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </AppContainer>
     , document.getElementById('container'));
+
+
+if (module.hot) {
+  module.hot.accept('./components/app', () => {
+    render(
+      <AppContainer>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </AppContainer>
+    , document.getElementById('container'));
+  });
+}
+

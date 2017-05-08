@@ -4,7 +4,7 @@ const App = () => (
   <div className="row">
     <div className="marginalized-2x">
       <div className="main">
-   Webpack Config with React and Hot Reloading <i className="fa fa-handshake-o" />
+   Webpack Config with React and hot Reloading <i className="fa fa-handshake-o" />
       </div>
     </div>
   </div>
